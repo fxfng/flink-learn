@@ -12,8 +12,8 @@ import org.fxf.source.split.MySourceSplit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Queue;
 
 public class MySourceSplitReader<T, SplitT extends MySourceSplit<?>> implements SplitReader<RecordAndOffset<T>, SplitT> {
     private static final Logger LOG = LoggerFactory.getLogger(MySourceSplitReader.class);
