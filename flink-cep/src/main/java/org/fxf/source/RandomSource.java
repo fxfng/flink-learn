@@ -41,13 +41,13 @@ public class RandomSource<SplitT extends MySourceSplit<?>> implements Source<JSO
 
         LOG.info("create enumerator");
         List<SplitT> splits = splitElements(elements, round, enumContext.currentParallelism());
-        return new MySplitEnumerator(enumContext, splits);
+        return new MySplitEnumerator<>(enumContext, splits);
     }
 
     @Override
     public SplitEnumerator<SplitT, Collection<SplitT>> restoreEnumerator(SplitEnumeratorContext<SplitT> enumContext,
                                                                                        Collection<SplitT> checkpoint) throws Exception {
-        return new MySplitEnumerator(enumContext, checkpoint);
+        return new MySplitEnumerator<>(enumContext, checkpoint);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class RandomSource<SplitT extends MySourceSplit<?>> implements Source<JSO
     @Override
     public SourceReader<JSONObject, SplitT> createReader(SourceReaderContext readerContext) throws Exception {
         LOG.info("create reader");
-        return new MySourceReader(readerContext.getConfiguration(), readerContext);
+        return new MySourceReader<>(readerContext.getConfiguration(), readerContext);
     }
 
     // 拆分List，构建Split

@@ -2,14 +2,16 @@ package org.fxf.source.enumerator;
 
 import org.apache.flink.api.connector.source.SplitEnumerator;
 import org.apache.flink.api.connector.source.SplitEnumeratorContext;
-import org.apache.flink.api.connector.source.SplitsAssignment;
 import org.fxf.source.split.MySourceSplit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Collection;
+import java.util.List;
+import java.util.Queue;
 
 public class MySplitEnumerator<SplitT extends MySourceSplit<?>> implements SplitEnumerator<SplitT, Collection<SplitT>> {
     private static final Logger LOG = LoggerFactory.getLogger(MySplitEnumerator.class);
@@ -17,9 +19,8 @@ public class MySplitEnumerator<SplitT extends MySourceSplit<?>> implements Split
     private final Queue<SplitT> remainSplits;
 
     /**
-     *
-     * @param context   SplitEnumeratorContext
-     * @param splits    待读取的split
+     * @param context SplitEnumeratorContext
+     * @param splits  待读取的split
      */
     public MySplitEnumerator(SplitEnumeratorContext<SplitT> context, Collection<SplitT> splits) {
         this.context = context;
@@ -60,12 +61,12 @@ public class MySplitEnumerator<SplitT extends MySourceSplit<?>> implements Split
     }
 
     @Override
-    public Collection<SplitT> snapshotState(long checkpointId) throws Exception {
+    public Collection<SplitT> snapshotState(long checkpointId) {
         return remainSplits;
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
 
     }
 }

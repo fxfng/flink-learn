@@ -25,7 +25,7 @@ public class MySourceSplitReader<T, SplitT extends MySourceSplit<?>> implements 
     }
 
     @Override
-    public RecordsWithSplitIds<RecordAndOffset<T>> fetch() throws IOException {
+    public RecordsWithSplitIds<RecordAndOffset<T>> fetch() {
         if (splits.isEmpty()) {
             return finishSplit();
         }
@@ -58,7 +58,7 @@ public class MySourceSplitReader<T, SplitT extends MySourceSplit<?>> implements 
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
 
     }
 

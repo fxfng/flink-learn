@@ -1,8 +1,6 @@
 package org.fxf.source.serializer;
 
 import org.apache.flink.core.io.SimpleVersionedSerializer;
-import org.apache.flink.core.memory.DataInputDeserializer;
-import org.apache.flink.core.memory.DataOutputSerializer;
 import org.fxf.source.split.MySourceSplit;
 
 import java.io.*;
@@ -19,8 +17,8 @@ public class MyVersionSerializer<SplitT extends MySourceSplit<?>> implements Sim
 
     @Override
     public byte[] serialize(SplitT split) throws IOException {
-        try(final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            final ObjectOutputStream out = new ObjectOutputStream(baos)){
+        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             final ObjectOutputStream out = new ObjectOutputStream(baos)) {
             out.writeInt(serialVersionUID);
             out.writeUTF(split.splitId());
             int size = split.getElements().size();
@@ -35,8 +33,8 @@ public class MyVersionSerializer<SplitT extends MySourceSplit<?>> implements Sim
 
     @Override
     public SplitT deserialize(int version, byte[] serialized) throws IOException {
-        try(final ByteArrayInputStream bais = new ByteArrayInputStream(serialized);
-            final ObjectInputStream ois = new ObjectInputStream(bais)){
+        try (final ByteArrayInputStream bais = new ByteArrayInputStream(serialized);
+             final ObjectInputStream ois = new ObjectInputStream(bais)) {
             int versionIn = ois.readInt();
             if (versionIn != serialVersionUID) {
                 throw new IOException("Unsupported version: " + versionIn);
@@ -44,7 +42,7 @@ public class MyVersionSerializer<SplitT extends MySourceSplit<?>> implements Sim
             String splitId = ois.readUTF();
             int size = ois.readInt();
             List<String> elements = new ArrayList<>(size);
-            for (int i = 0; i < size; i++){
+            for (int i = 0; i < size; i++) {
                 elements.add(ois.readUTF());
             }
             return (SplitT) new MySourceSplit(splitId, elements);

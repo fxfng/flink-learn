@@ -3,12 +3,10 @@ package org.fxf.source.split;
 import lombok.Getter;
 import org.apache.flink.api.connector.source.SourceSplit;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 /**
- *
  * @author fxf
  */
 public class MySourceSplit<T> implements SourceSplit, Serializable {
@@ -19,8 +17,7 @@ public class MySourceSplit<T> implements SourceSplit, Serializable {
     private final List<T> elements;
 
     /**
-     *
-     * @param splitId 分片编号
+     * @param splitId  分片编号
      * @param elements 分片数据
      */
     public MySourceSplit(String splitId, List<T> elements) {

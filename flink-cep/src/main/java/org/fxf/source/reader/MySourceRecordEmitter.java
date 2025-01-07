@@ -13,7 +13,7 @@ public class MySourceRecordEmitter<T, SplitT extends MySourceSplit<?>>
     private static final Logger LOG = LoggerFactory.getLogger(MySourceRecordEmitter.class);
 
     @Override
-    public void emitRecord(RecordAndOffset<T> recordAndOffset, SourceOutput<T> output, MySourceSplitState<SplitT> splitState) throws Exception {
+    public void emitRecord(RecordAndOffset<T> recordAndOffset, SourceOutput<T> output, MySourceSplitState<SplitT> splitState) {
         LOG.info("emitRecord: {}", recordAndOffset.getRecord());
         output.collect(recordAndOffset.getRecord());
     }
